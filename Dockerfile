@@ -1,0 +1,16 @@
+FROM dunglas/frankenphp
+
+COPY . /opt/app/
+WORKDIR /opt/app/
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    zip \
+    unzip
+
+# Install composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+    php composer-setup.php && \
+    php -r "unlink('composer-setup.php');" && \
+    php composer.phar install
